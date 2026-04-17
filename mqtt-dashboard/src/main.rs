@@ -129,13 +129,19 @@ impl eframe::App for DashboardApp {
 
 fn start_mqtt_thread(shared: Arc<Mutex<SensorData>>) {
     thread::spawn(move || {
-        let mut opts = MqttOptions::new("mqtt-dashboard", "192.168.178.30", 1883);
+        let host = std::env::var("MQTT_HOST").unwrap_or_else(|_| "localhost".to_string());
+        let port: u16 = std::env::var("MQTT_PORT")
+            .unwrap_or_else(|_| "1883".to_string())
+            .parse()
+            .expect("MQTT_PORT must be a valid u16");
+
+        let mut opts = MqttOptions::new("mqtt-dashboard", &host, port);
         opts.set_keep_alive(Duration::from_secs(5));
 
         let (client, mut connection) = Client::new(opts, 16);
 
         {
-            shared.lock().unwrap().status = "Connecting…".to_owned();
+            shared.lock().unwrap().status = format!("Connecting to {host}:{port} …");
         }
 
         // Queue the subscription – it will be sent once the ConnAck arrives.
