@@ -1,0 +1,14 @@
+[package]
+name = "mqtt-data-reader"
+version = "0.1.0"
+edition = "2024"
+
+[lib]
+crate-type = ["cdylib"]
+
+[dependencies]
+cxx = { version = "1", features = ["c++14"] }
+libc = "0.2"
+
+[build-dependencies]
+cxx-build = "1"
