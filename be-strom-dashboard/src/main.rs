@@ -55,10 +55,9 @@ impl DashboardApp {
 
         // Slightly larger default font sizes
         let mut style = (*cc.egui_ctx.style()).clone();
-        style
-            .text_styles
-            .get_mut(&egui::TextStyle::Body)
-            .map(|s| s.size = 13.5);
+        if let Some(s) = style.text_styles.get_mut(&egui::TextStyle::Body) {
+            s.size = 13.5;
+        };
         cc.egui_ctx.set_style(style);
 
         Self { state }
