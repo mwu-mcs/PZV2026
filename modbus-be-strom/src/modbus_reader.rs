@@ -21,17 +21,18 @@ pub async fn read_current(address: &str) -> anyhow::Result<DeviceData> {
         x
     });
     let device = String::from_utf8(bytes).unwrap();
+    let current_factor = 100.0;
 
     println!("Fetching the current values ...");
     let raw_data = ctx.read_input_registers(0x0000, 7).await??;
 
     let voltage = f64::from(raw_data[0]) / DIVISOR_V_P;
-    let current_1 = f64::from(raw_data[1]) / DIVISOR_I;
-    let current_2 = f64::from(raw_data[2]) / DIVISOR_I;
-    let current_3 = f64::from(raw_data[3]) / DIVISOR_I;
-    let power_1 = f64::from(raw_data[4]) / DIVISOR_V_P;
-    let power_2 = f64::from(raw_data[5]) / DIVISOR_V_P;
-    let power_3 = f64::from(raw_data[6]) / DIVISOR_V_P;
+    let current_1 = f64::from(raw_data[1]) / DIVISOR_I * current_factor;
+    let current_2 = f64::from(raw_data[2]) / DIVISOR_I * current_factor;
+    let current_3 = f64::from(raw_data[3]) / DIVISOR_I * current_factor;
+    let power_1 = f64::from(raw_data[4]) / DIVISOR_V_P * current_factor;
+    let power_2 = f64::from(raw_data[5]) / DIVISOR_V_P * current_factor;
+    let power_3 = f64::from(raw_data[6]) / DIVISOR_V_P * current_factor;
 
     let be_strom = DeviceData {
         device,
