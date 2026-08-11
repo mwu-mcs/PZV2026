@@ -108,7 +108,7 @@ fn phase_card(ui: &mut egui::Ui, title: &str, current: &Qty, power: &Qty) {
         .fill(COL_CARD)
         .corner_radius(egui::CornerRadius::same(10))
         .inner_margin(egui::Margin::same(16))
-        .stroke(Stroke::new(1.0, COL_CARD_BORDER));
+        .stroke(Stroke::new(1.0_f32, COL_CARD_BORDER));
 
     frame.show(ui, |ui| {
         ui.set_min_width(ui.available_width());
@@ -138,7 +138,7 @@ fn info_card(ui: &mut egui::Ui, icon: &str, label: &str, value: &str, value_colo
         .fill(COL_CARD)
         .corner_radius(egui::CornerRadius::same(10))
         .inner_margin(egui::Margin::symmetric(20, 14))
-        .stroke(Stroke::new(1.0, COL_CARD_BORDER));
+        .stroke(Stroke::new(1.0_f32, COL_CARD_BORDER));
 
     frame.show(ui, |ui| {
         ui.horizontal(|ui| {
@@ -169,7 +169,7 @@ impl eframe::App for DashboardApp {
                 egui::Frame::default()
                     .fill(COL_CARD)
                     .inner_margin(egui::Margin::symmetric(16, 10))
-                    .stroke(Stroke::new(1.0, COL_CARD_BORDER)),
+                    .stroke(Stroke::new(1.0_f32, COL_CARD_BORDER)),
             )
             .show(ctx, |ui| {
                 ui.horizontal(|ui| {
